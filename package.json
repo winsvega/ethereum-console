@@ -1,0 +1,24 @@
+{
+  "name": "ethereum-console",
+  "version": "0.0.1",
+  "description": "Commandline console for Ethereum nodes",
+  "main": "main.js",
+  "bin": { "ethconsole": "./main.js" },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ethereum/ethereum-console.git"
+  },
+  "keywords": [
+    "console",
+    "ethereum",
+    "web3"
+  ],
+  "author": "Christian Reitwiessner <c@ethdev.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ethereum/ethereum-console/issues"
+  }
+}
