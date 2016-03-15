@@ -1,19 +1,25 @@
 #!/usr/bin/env node
 var Web3 = require('web3');
-var web3admin = require('./web3Admin.js');
 var repl = require('repl');
+var web3admin = require('./web3Admin.js');
+
 var net = require('net');
 var ipcpath = require('./getIpcPath.js');
+
+var ipcPath = ipcpath();
+
+if (!processArguments())
+    return;
 
 process.on('uncaughtException', function(err) {
     console.error("Uncaught exception: " + err);
 });
 
-console.log("Connecting to node at " + ipcpath());
+console.log("Connecting to node at " + ipcPath);
 web3 = new Web3(new Web3.providers.IpcProvider(ipcpath(), net));
 web3admin.extend(web3);
 web3.eth.getBlockNumber(function(err, number) {
-    if (err) {
+    if (err) {	
         console.error("Could not connect to node. Please start an Ethereum node first.");
     } else {
         console.log("Connection successful.");
@@ -22,3 +28,23 @@ web3.eth.getBlockNumber(function(err, number) {
         var replServer = repl.start({});
     }
 });
+
+function processArguments()
+{
+     var argIndex = 1;
+     for (var k = 2; k < process.argv.length; k++)
+     {
+     	var arg = process.argv[k];    
+        if (arg === "--ipcpath" && process.argv.length > k + 1)
+        {
+	    k++;
+            ipcPath = process.argv[k];
+	}	
+	else
+	{
+	     console.error("Invalid arguments");
+	     return false;
+        }
+     }
+     return true;
+}
