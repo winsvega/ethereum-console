@@ -17,18 +17,19 @@ var ipcpath = require('./getIpcPath.js');
 
 var ipcPath = ipcpath();
 var jsScript;
-
-console.log("")
-console.log("------------------")
-console.log("Run by default in interactive mode. When called in script mode, process.exit() should be called in your script to exit the nodejs app.")
-console.log("Arguments:")
-console.log("- a path which target a JavaScript file to execute (.js extension).")
-console.log("- a path which target an ipc path.")
-console.log("------------------")
-console.log("")
+var help = false;
 
 if (!processArguments())
 	return;
+
+if (help)
+{
+	console.log("Run by default in interactive mode. When called in script mode, process.exit() should be called in your script to exit the nodejs app.")
+	console.log("Arguments:")
+	console.log("- a path to a JavaScript file to execute (.js extension).")
+	console.log("- a path to an ipc path.")
+	return;
+}
 
 process.on('uncaughtException', function(err) {
 	console.error("Uncaught exception: " + err);
@@ -62,11 +63,13 @@ function processArguments()
 		var arg = process.argv[k];
 		if (arg.endsWith('.js'))
 			jsScript = arg;
+		else if (arg === "help" || arg === "--help" || arg === "-h")
+			help = true;
 		else
 		{
 			ipcPath = arg;
 			if (ipcPath.startsWith("ipc:"))
-				ipcPath = ipcPath.substring(4)
+				ipcPath = ipcPath.substring(4);
 		}
 	}
 	return true;
@@ -75,7 +78,8 @@ function processArguments()
 function executeScript()
 {
 	console.log("Executing " + jsScript + " ...");
-	fs.readFile(jsScript, 'utf8', function (err, data) {
+	fs.readFile(jsScript, 'utf8', function (err, data)
+	{
 		if (err)
 		{
 			console.log(err);
