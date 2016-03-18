@@ -18,16 +18,12 @@ var ipcpath = require('./getIpcPath.js');
 var ipcPath = ipcpath();
 var jsScript;
 var help = false;
-
 if (!processArguments())
 	return;
 
 if (help)
 {
-	console.log("Run by default in interactive mode. When called in script mode, process.exit() should be called in your script to exit the nodejs app.")
-	console.log("Arguments:")
-	console.log("- a path to a JavaScript file to execute (.js extension).")
-	console.log("- a path to an ipc path.")
+	logHelp();
 	return;
 }
 
@@ -58,6 +54,7 @@ web3.eth.getBlockNumber(function(err, number)
 
 function processArguments()
 {
+	var notRecognized = false;
 	for (var k = 2; k < process.argv.length; k++)
 	{
 		var arg = process.argv[k];
@@ -65,12 +62,18 @@ function processArguments()
 			jsScript = arg;
 		else if (arg === "help" || arg === "--help" || arg === "-h")
 			help = true;
+		else if (arg.startsWith("ipc:") || arg.endsWith(".ipc"))
+			ipcPath = arg.startsWith("ipc:") ? arg.substring(4) : arg;
 		else
 		{
-			ipcPath = arg;
-			if (ipcPath.startsWith("ipc:"))
-				ipcPath = ipcPath.substring(4);
+			notRecognized = true;
+			console.log("Argument not recognized " + arg);
 		}
+	}
+	if (notRecognized)
+	{
+		logHelp();
+		return false;
 	}
 	return true;
 }
@@ -91,4 +94,12 @@ function executeScript()
 			script.runInThisContext();
 		}
 	});
+}
+
+function logHelp()
+{
+	console.log("Run by default in interactive mode. When called in script mode, process.exit() should be called in your script to exit the nodejs app.")
+	console.log("Arguments:")
+	console.log("- a path to a JavaScript file to execute (.js extension).")
+	console.log("- a path to an ipc path.")
 }
