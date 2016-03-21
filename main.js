@@ -98,8 +98,14 @@ function executeScript()
 
 function logHelp()
 {
-	console.log("Run by default in interactive mode. When called in script mode, process.exit() should be called in your script to exit the nodejs app.")
-	console.log("Arguments:")
-	console.log("- a path to a JavaScript file to execute (.js extension).")
-	console.log("- a path to an ipc path.")
+	var help = "Usage: ethconsole [javascript file] [ipc socket]\n" +
+			"Connects to an ethereum node via ipc in order to control it remotely\n" +
+			"through global variable web3 (web3.admin is also present).\n" +
+			"If no arguments are given, connects to the ipc socket at " + ipcpath() + "\n" +
+			"and drops into interactive mode.\n" +
+			"Arguments:\n" +
+			"	<ipc socket path>	connect to the given ipc socket (use ipc://<path> if it does not end with .ipc)\n" +
+			"	<javascript file>	execute the given javascript file that has to end in .js non-interactively.\n" +
+			"				The script has to call process.exit() in order to terminate the console.\n"
+	console.log(help);
 }
