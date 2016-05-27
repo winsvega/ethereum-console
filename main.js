@@ -14,7 +14,7 @@ var net = require('net');
 var fs = require('fs')
 var vm = require('vm');
 var ipcpath = require('./getIpcPath.js');
-require('es6shim');
+require('es6-shim');
 
 var ipcPath = ipcpath();
 var jsScript;
