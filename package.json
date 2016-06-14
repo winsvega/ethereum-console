@@ -24,6 +24,7 @@
     "url": "https://github.com/ethereum/ethereum-console/issues"
   },
   "dependencies": {
-    "web3": "~0.15.3"
+    "web3": "~0.15.3",
+    "es6-shim": "^0.35.1"
   }
 }

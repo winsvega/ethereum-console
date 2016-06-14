@@ -259,5 +259,44 @@ module.exports = {
                 })
             ]
         });
+
+	// TEST
+        web3._extend({
+            property: 'test',
+            methods:
+            [
+		new web3._extend.Method({
+                    name: 'mineBlocks',
+                    call: 'test_mineBlocks',
+                    params: 1,
+                    inputFormatter: [web3._extend.utils.formatInputInt],
+                    outputFormatter: web3._extend.formatters.formatOutputBool
+                }),
+		new web3._extend.Method({
+                    name: 'modifyTimestamp',
+                    call: 'test_modifyTimestamp',
+                    params: 1,
+                    inputFormatter: [web3._extend.utils.formatInputInt],
+                    outputFormatter: web3._extend.formatters.formatOutputBool
+                }),
+		new web3._extend.Method({
+                    name: 'addBlock',
+                    call: 'test_addBlock',
+                    params: 1,
+                    inputFormatter: [web3._extend.utils.formatInputString],
+                    outputFormatter: web3._extend.formatters.formatOutputBool
+                }),
+		new web3._extend.Method({
+                    name: 'rewindToBlock',
+                    call: 'test_rewindToBlock',
+                    params: 1,
+                    inputFormatter: [web3._extend.utils.formatInputInt],
+                    outputFormatter: web3._extend.formatters.formatOutputBool
+                })
+            ],
+            properties:
+            [
+            ]
+        });
     }
 };
