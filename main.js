@@ -33,8 +33,13 @@ process.on('uncaughtException', function(err) {
 });
 
 console.log("Connecting to node at " + ipcPath);
-web3 = new Web3(new Web3.providers.IpcProvider(ipcPath, net));
+var web3 = new Web3(new Web3.providers.IpcProvider(ipcPath, net));
 web3admin.extend(web3);
+
+global.web3 = web3;
+global.utils = require('./utils.js');
+global.proces = require('process');
+
 web3.eth.getBlockNumber(function(err, number)
 {
 	if (err)
@@ -48,7 +53,7 @@ web3.eth.getBlockNumber(function(err, number)
 		else
 		{
 			console.log("Entering interactive mode.");
-			repl.start({});
+			repl.start();
 		}
 	}
 });
