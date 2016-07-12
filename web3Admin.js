@@ -266,6 +266,12 @@ module.exports = {
             methods:
             [
 		new web3._extend.Method({
+                    name: 'setChainParams',
+                    call: 'test_setChainParams',
+                    params: 1,
+                    outputFormatter: web3._extend.formatters.formatOutputBool
+                }),
+		new web3._extend.Method({
                     name: 'mineBlocks',
                     call: 'test_mineBlocks',
                     params: 1,
