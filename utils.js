@@ -25,7 +25,7 @@ function chainParams(options) {
   };
   if (options.accounts !== undefined) {
     for (var address in options.accounts) {
-      params[address] = { wei: options.accounts[address] };
+      params.accounts[address] = { wei: options.accounts[address] };
     }
   }
   return params;
