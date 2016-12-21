@@ -53,7 +53,11 @@ web3.eth.getBlockNumber(function(err, number)
 		else
 		{
 			console.log("Entering interactive mode.");
-			repl.start();
+			repl.start({
+				prompt: "> ",
+				input: process.stdin,
+				output: process.stdout
+			});
 		}
 	}
 });
